@@ -19,6 +19,16 @@ public:
     }
 
     // Destructor
+    ~node()
+    {
+        int val=this->data;
+        if(next!=NULL)
+        {
+            delete next;
+            next=NULL;
+        }
+        cout<<"memory is free for node with data"<<val<<endl;
+    }
 };
 // Traversal of Linked-list
 void print(node *head)
@@ -45,32 +55,52 @@ int getlength(node *head)
     return length;
 }
 // Inserrt nade at 1st Position
-void insertAthead(node *&head, int d)
+void insertAthead(node *&tail, node *&head, int d)
 {
-    node *temp = new node(d);
-    temp->next = head;
-    head->prev = temp;
-    head = temp;
+    if(head==NULL)
+    {
+        node*temp=new node(d);
+        head=temp;
+        tail=temp;
+    }
+    else
+    {
+        node *temp = new node(d);
+        temp->next = head;
+        head->prev = temp;
+        head = temp;
+    }
+    
 }
 // Insert at Tail
-void insertAtTail(node *&tail, int d)
+void insertAtTail(node *&tail, node *&head, int d)
 {
-    node *temp = new node(d);
-    tail->next = temp;
-    temp->prev = tail;
-    tail = temp;
+    if(tail==NULL)
+    {
+        node*temp=new node(d);
+        head=temp;
+        tail=temp;
+    }
+    else
+    {
+        node *temp = new node(d);
+        tail->next = temp;
+        temp->prev = tail;
+        tail = temp;
+    }
 }
+
 // Insert at Position
 void insertAtPosition(node *&tail, node *&head, int position, int d)
 {
     // Insert at Head
     if (position == 1)
     {
-        insertAthead(head, d);
+        insertAthead(tail,head, d);
         return;
     }
 
-    node* temp = head;
+    node *temp = head;
     int cnt = 1;
 
     while (cnt < position - 1)
@@ -82,7 +112,7 @@ void insertAtPosition(node *&tail, node *&head, int position, int d)
     // Insert at Tail
     if (temp->next == NULL)
     {
-        insertAtTail(tail, d);
+        insertAtTail(tail,head, d);
         return;
     }
 
@@ -94,34 +124,71 @@ void insertAtPosition(node *&tail, node *&head, int position, int d)
     temp->next = nodetobeInserted;
     nodetobeInserted->prev = temp;
 }
+// Deelt from head
+void delet(int position, node* &head)
+{
+        if(position==1)
+        {
+            node*temp=head;
+            temp->next->prev=NULL;
+            head=temp->next;
+            temp->next=NULL;
+            delete temp;
+        }
+
+    //Deleting from any node or Tail
+    else
+    {
+        node* curr=head;
+        node* prev=NULL;
+
+        int cnt=1;
+        while (cnt<position)
+        {
+            prev=curr;
+            curr=curr->next;
+            cnt++;
+        }
+
+        curr->prev=NULL;
+        prev->next=curr->next;
+        curr->next=NULL;
+
+        delete curr;
+    }
+}
+
 // Main function
 int main()
 {
-    node *node1 = new node(10);
-    node *head = node1;
-    node *tail = node1;
+    node *head = NULL;
+    node *tail = NULL;
     print(head);
 
     // Insertion
-    insertAthead(head, 11);
+    insertAthead(tail,head, 11);
     print(head);
-    insertAthead(head, 12);
+    insertAthead(tail, head, 12);
     print(head);
-    insertAthead(head, 13);
+    insertAthead(tail, head, 13);
     print(head);
-    insertAthead(head, 14);
+    insertAthead(tail, head, 14);
     print(head);
-    insertAthead(head, 15);
+    insertAthead(tail, head, 15);
     print(head);
-    insertAtTail(tail, 22);
+    insertAtTail(tail, head, 22);
     print(head);
-    insertAtTail(tail, 25);
+    insertAtTail(tail, head, 25);
     print(head);
-    insertAtTail(tail, 26);
+    insertAtTail(tail, head, 26);
     print(head);
-    insertAtTail(tail, 28);
+    insertAtTail(tail, head, 28);
     print(head);
     insertAtPosition(tail, head, 4, 30);
+    print(head);
+    delet(1,head);
+    print(head);
+    delet(6, head);
     print(head);
     cout << " The Length of the Linked-List is..." << getlength(head) << endl;
     return 0;
