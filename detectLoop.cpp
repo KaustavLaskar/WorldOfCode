@@ -57,7 +57,7 @@ class Solution
         Node* temp=head;
 
         //Cycle Present
-        if(visited[temp]==true)
+        if(visited[temp]=true)
         {
             return true;
         }
