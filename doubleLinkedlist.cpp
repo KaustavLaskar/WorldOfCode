@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include <iostream>
+
 using namespace std;
 // Creat a node in class
 class node
