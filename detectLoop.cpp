@@ -1,6 +1,3 @@
-//{ Driver Code Starts
-//Initial template code for C++
-
 #include <bits/stdc++.h>
 using namespace std;
 
